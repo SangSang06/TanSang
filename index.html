@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chúc Mừng Ngày 20/10 - Dành tặng Trần Thị Kim Thư</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --primary-pink: #ff758c;
+      --secondary-pink: #ff7eb3;
+      --soft-rose: #fff0f3;
+      --deep-rose: #c9184a;
+      --accent-gold: #d4af37;
+      --gold-gradient: linear-gradient(135deg, #ffe066 0%, #d4af37 50%, #aa7c11 100%);
+      --bg-gradient: linear-gradient(135deg, #0f0c20 0%, #2b102f 40%, #4a1236 80%, #1f0518 100%);
+      --glass-bg: rgba(255, 255, 255, 0.12);
+      --glass-border: rgba(255, 255, 255, 0.25);
+      --glass-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      min-height: 100vh;
+      background: var(--bg-gradient);
+      color: #ffffff;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Interactive Canvas Background */
+    #bgCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .main-container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 800px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Floating Header Badge */
+    .header-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 215, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border-radius: 50px;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #ffd700;
+      margin-bottom: 25px;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+      animation: pulseGlow 3s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { box-shadow: 0 0 10px rgba(212, 175, 55, 0.2); }
+      100% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.6); }
+    }
+
+    /* Envelope & Card Wrapper */
+    .envelope-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      perspective: 1200px;
+      margin-bottom: 30px;
+    }
+
+    /* Outer Glass Card Container */
+    .card-container {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 40px 35px;
+      box-shadow: var(--glass-shadow), inset 0 0 20px rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease;
+    }
+
+    .card-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,117,140,0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Decorative Corner Elements */
+    .corner-decor {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border: 2px solid transparent;
+      pointer-events: none;
+    }
+    .top-left { top: 15px; left: 15px; border-top-color: var(--accent-gold); border-left-color: var(--accent-gold); }
+    .top-right { top: 15px; right: 15px; border-top-color: var(--accent-gold); border-right-color: var(--accent-gold); }
+    .bottom-left { bottom: 15px; left: 15px; border-bottom-color: var(--accent-gold); border-left-color: var(--accent-gold); }
+    .bottom-right { bottom: 15px; right: 15px; border-bottom-color: var(--accent-gold); border-right-color: var(--accent-gold); }
+
+    /* Title Styling */
+    .greeting-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.8rem;
+      text-align: center;
+      background: linear-gradient(135deg, #ffffff 0%, #ffc2d1 50%, #ffd700 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 25px;
+      line-height: 1.2;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+    }
+
+    /* Content Body */
+    .greeting-body {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #f1f1f1;
+      text-align: justify;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      font-weight: 300;
+    }
+
+    .greeting-body p {
+      position: relative;
+      padding-left: 20px;
+      border-left: 2px solid rgba(255, 117, 140, 0.4);
+    }
+
+    .salutation {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #ffe6e8;
+      border-left: none !important;
+      padding-left: 0 !important;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .highlight-name {
+      color: #ffd700;
+      font-weight: 600;
+      border-bottom: 1px dashed rgba(255, 215, 0, 0.5);
+    }
+
+    .highlight-tag {
+      background: rgba(255, 117, 140, 0.2);
+      color: #ffb3c1;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    /* Signature Section */
+    .signature-section {
+      margin-top: 30px;
+      text-align: right;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .signature-title {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .signature-name {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-top: 5px;
+    }
+
+    /* Action Toolbar Buttons */
+    .action-toolbar {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-flower {
+      background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+      color: white;
+    }
+    .btn-flower:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(255, 117, 140, 0.5);
+    }
+
+    .btn-copy {
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .btn-copy:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-3px);
+    }
+
+    .btn-music {
+      background: rgba(212, 175, 55, 0.2);
+      color: #ffd700;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+    }
+    .btn-music:hover {
+      background: rgba(212, 175, 55, 0.35);
+      transform: translateY(-3px);
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: rgba(0, 0, 0, 0.85);
+      border: 1px solid var(--accent-gold);
+      color: #fff;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 100;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 600px) {
+      .card-container {
+        padding: 30px 20px;
+        border-radius: 18px;
+      }
+      .greeting-title {
+        font-size: 2.1rem;
+      }
+      .greeting-body {
+        font-size: 0.95rem;
+      }
+      .signature-name {
+        font-size: 1.8rem;
+      }
+      .btn-action {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Particles Canvas -->
+  <canvas id="bgCanvas"></canvas>
+
+  <div class="main-container">
+    <!-- Header Tag -->
+    <div class="header-badge">
+      ✨ Happy Vietnamese Women's Day • 20/10 ✨
+    </div>
+
+    <div class="envelope-wrapper">
+      <div class="card-container" id="greetingCard">
+        <!-- Corner Gold Accents -->
+        <div class="corner-decor top-left"></div>
+        <div class="corner-decor top-right"></div>
+        <div class="corner-decor bottom-left"></div>
+        <div class="corner-decor bottom-right"></div>
+
+        <!-- Main Title -->
+        <h1 class="greeting-title">Chúc Mừng Ngày 20/10</h1>
+
+        <!-- Card Content Body -->
+        <div class="greeting-body" id="cardText">
+          <p class="salutation">Thân gửi <span class="highlight-name">Trần Thị Kim Thư</span>,</p>
+
+          <p>Nhân ngày Phụ nữ Việt Nam 20/10, Tấn Sang xin gửi những lời chúc mừng ấm áp và tươi đẹp nhất đến Kim Thư – một cô gái rạng rỡ, dịu dàng và đầy tài năng.</p>
+
+          <p>Cảm ơn Kim Thư vì đã luôn mang đến năng lượng tích cực, sự nhiệt huyết và những nụ cười rạng rỡ. Sự hiện diện của Kim Thư luôn đem lại niềm vui và những điều vô cùng tuyệt vời.</p>
+
+          <p>Nhân ngày đặc biệt này, chúc Kim Thư luôn xinh đẹp, tự tin, hạnh phúc và tỏa sáng theo cách riêng của mình. Chúc Kim Thư luôn gặt hái được nhiều thành công trong học tập, công việc, duy trì trọn vẹn nhiệt huyết tuổi trẻ và giữ vững tinh thần bản lĩnh của một <span class="highlight-tag">Sinh viên 5 Tốt</span>.</p>
+
+          <p>Chúc Kim Thư có một ngày 20/10 thật trọn vẹn, tràn ngập niềm vui, hoa và những điều dịu dàng nhất!</p>
+        </div>
+
+        <!-- Signature -->
+        <div class="signature-section">
+          <div class="signature-title">Trân trọng & Thân ái,</div>
+          <div class="signature-name">Huỳnh Minh Tấn Sang</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-toolbar">
+      <button class="btn-action btn-flower" onclick="triggerPetalBurst()">
+        🌸 Tung hoa chúc mừng
+      </button>
+      <button class="btn-action btn-copy" onclick="copyGreetingText()">
+        📋 Sao chép lời chúc
+      </button>
+      <button class="btn-action btn-music" id="musicBtn" onclick="toggleAudio()">
+        🎵 Phát nhạc du dương
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">Đã sao chép lời chúc thành công! 💌</div>
+
+  <script>
+    /* Background Particle System */
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Petal {
+      constructor() {
+        this.reset();
+      }
+
+      reset() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * -height;
+        this.size = Math.random() * 8 + 6;
+        this.speedY = Math.random() * 1.2 + 0.8;
+        this.speedX = Math.random() * 0.8 - 0.4;
+        this.angle = Math.random() * Math.PI * 2;
+        this.spin = (Math.random() - 0.5) * 0.02;
+        this.opacity = Math.random() * 0.6 + 0.3;
+        this.color = Math.random() > 0.3 ? '#ffb3c1' : '#ffd700';
+      }
+
+      update() {
+        this.y += this.speedY;
+        this.x += Math.sin(this.angle) * 0.5 + this.speedX;
+        this.angle += this.spin;
+
+        if (this.y > height + 20) {
+          this.reset();
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+        
+        // Draw Petal Shape
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.quadraticCurveTo(this.size / 2, -this.size, this.size, 0);
+        ctx.quadraticCurveTo(this.size / 2, this.size, 0, 0);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    // Initialize Particles
+    for (let i = 0; i < 45; i++) {
+      particles.push(new Petal());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, width, height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    /* Fireworks/Confetti Trigger */
+    function triggerPetalBurst() {
+      // Multiple confetti bursts
+      confetti({
+        particleCount: 70,
+        spread: 80,
+        origin: { y: 0.6 },
+        colors: ['#ff758c', '#ff7eb3', '#ffd700', '#ffffff', '#ffb3c1']
+      });
+
+      setTimeout(() => {
+        confetti({
+          particleCount: 50,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: ['#ff758c', '#ffd700']
+        });
+      }, 250);
+
+      setTimeout(() => {
+        confetti({
+          particleCount: 50,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: ['#ff7eb3', '#ffffff']
+        });
+      }, 400);
+    }
+
+    // Trigger initial confetti on load
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(triggerPetalBurst, 600);
+    });
+
+    /* Copy Card Content Function */
+    function copyGreetingText() {
+      const textToCopy = `Thân gửi Trần Thị Kim Thư,
+
+Nhân ngày Phụ nữ Việt Nam 20/10, Tấn Sang xin gửi những lời chúc mừng ấm áp và tươi đẹp nhất đến Kim Thư – một cô gái rạng rỡ, dịu dàng và đầy tài năng.
+
+Cảm ơn Kim Thư vì đã luôn mang đến năng lượng tích cực, sự nhiệt huyết và những nụ cười rạng rỡ. Sự hiện diện của Kim Thư luôn đem lại niềm vui và những điều vô cùng tuyệt vời.
+
+Nhân ngày đặc biệt này, chúc Kim Thư luôn xinh đẹp, tự tin, hạnh phúc và tỏa sáng theo cách riêng của mình. Chúc Kim Thư luôn gặt hái được nhiều thành công trong học tập, công việc, duy trì trọn vẹn nhiệt huyết tuổi trẻ và giữ vững tinh thần bản lĩnh của một Sinh viên 5 Tốt.
+
+Chúc Kim Thư có một ngày 20/10 thật trọn vẹn, tràn ngập niềm vui, hoa và những điều dịu dàng nhất!
+
+Trân trọng & Thân ái,
+Huỳnh Minh Tấn Sang`;
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        showToast("Đã sao chép lời chúc của Tấn Sang! 💌");
+      }).catch(err => {
+        showToast("Lỗi sao chép, vui lòng thử lại!");
+      });
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.innerText = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    /* Web Audio API - Soothing Synth Background Melody */
+    let audioCtx = null;
+    let isPlaying = false;
+    let melodyInterval = null;
+
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function playNote(freq, duration) {
+      if (!audioCtx || audioCtx.state !== 'running') return;
+      
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+      gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.12, audioCtx.currentTime + 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
+
+    function toggleAudio() {
+      const btn = document.getElementById('musicBtn');
+      initAudio();
+
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      if (!isPlaying) {
+        isPlaying = true;
+        btn.innerHTML = '⏸️ Dừng phát nhạc';
+        btn.style.background = 'rgba(255, 117, 140, 0.3)';
+
+        // Gentle Pentatonic Melody Notes (C Major / A Minor Soft Vibe)
+        const notes = [261.63, 329.63, 392.00, 523.25, 440.00, 392.00, 329.63];
+        let idx = 0;
+
+        melodyInterval = setInterval(() => {
+          playNote(notes[idx % notes.length], 1.8);
+          idx++;
+        }, 800);
+
+      } else {
+        isPlaying = false;
+        clearInterval(melodyInterval);
+        btn.innerHTML = '🎵 Phát nhạc du dương';
+        btn.style.background = 'rgba(212, 175, 55, 0.2)';
+      }
+    }
+  </script>
+</body>
+</html>
